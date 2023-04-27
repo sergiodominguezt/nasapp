@@ -41,7 +41,6 @@ public class HomeActivity extends AppCompatActivity {
                 editor.apply();
                 Intent intent = new Intent(HomeActivity.this, MainActivity.class);
                 startActivity(intent);
-                finish();
             }
         });
     }
