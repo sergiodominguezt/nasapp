@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Nasapp</string>
+    <string name="login">Sign In!</string>
+    <string name="enter_password">Enter password</string>
+    <string name="enter_email">Enter your Email</string>
+    <string name="logout">Logout</string>
+    <string name="title_activity_home">HomeActivity</string>
+    <string name="enter_name">Enter your name</string>
+    <string name="signup">Sign Up!</string>
+    <string name="register">No account yet? Sign up</string>
+</resources>
