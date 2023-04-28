@@ -28,7 +28,7 @@ public class HomeActivity extends AppCompatActivity {
 
         sharedPreferences = getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
 
-        email = sharedPreferences.getString("EMAIL_KEY", null);
+        email = sharedPreferences.getString(EMAIL_KEY, null);
 
         TextView welcome = findViewById(R.id.idWelcome);
         welcome.setText("Welcome \n" + email);

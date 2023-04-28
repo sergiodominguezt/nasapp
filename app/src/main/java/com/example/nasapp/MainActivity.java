@@ -13,6 +13,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.snackbar.Snackbar;
+
 import org.w3c.dom.Text;
 
 public class MainActivity extends AppCompatActivity {
@@ -45,16 +47,22 @@ public class MainActivity extends AppCompatActivity {
                 if (TextUtils.isEmpty(emailEditText.getText().toString()) && TextUtils.isEmpty(passwordEditText.getText().toString())) {
                     Toast.makeText(MainActivity.this, "Please Enter Email and Password", Toast.LENGTH_SHORT).show();
                 } else {
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
 
-                    editor.putString(EMAIL_KEY, emailEditText.getText().toString());
-                    editor.putString(PASSWORD_KEY, passwordEditText.getText().toString());
+                    DBHelper dbHelper = new DBHelper(MainActivity.this);
 
-                    editor.apply();
+                    if (dbHelper.checkUser(emailEditText.getText().toString().trim(), passwordEditText.getText().toString().trim())) {
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
 
-                    Intent intent = new Intent(MainActivity.this, HomeActivity.class);
-                    startActivity(intent);
-                    finish();
+                        editor.putString(EMAIL_KEY, emailEditText.getText().toString());
+                        editor.putString(PASSWORD_KEY, passwordEditText.getText().toString());
+
+                        editor.apply();
+                        Intent intent = new Intent(MainActivity.this, HomeActivity.class);
+                        startActivity(intent);
+                        finish();
+                    } else {
+                        Toast.makeText(MainActivity.this, "Wrong email or password", Toast.LENGTH_SHORT).show();
+                    }
 
                 }
             }
@@ -68,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
                 finish();
             }
         });
+
     }
 
     @Override
@@ -78,4 +87,6 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         }
     }
+
+
 }

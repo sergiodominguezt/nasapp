@@ -2,6 +2,7 @@ package com.example.nasapp;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -48,6 +49,29 @@ public class DBHelper extends SQLiteOpenHelper {
         } else {
             return true;
         }
+
+    }
+
+    public boolean checkUser(String email, String password) {
+        String[] columns = {
+          COLUMN_ID
+        };
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = COLUMN_EMAIL + " = ?" + " AND " + COLUMN_PASSWORD + " = ? ";
+
+        String[] selectionArgs = {email, password};
+
+        Cursor cursor = db.query(USERS_TABLE, columns, query, selectionArgs, null, null, null);
+
+        int cursorCount = cursor.getCount();
+
+        cursor.close();
+        db.close();
+        if (cursorCount > 0) {
+            return true;
+        }
+        return false;
 
     }
 }
