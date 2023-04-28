@@ -5,13 +5,17 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 public class SignUpActivity extends AppCompatActivity {
 
@@ -19,14 +23,24 @@ public class SignUpActivity extends AppCompatActivity {
     public static final String FULL_NAME = "name_key";
     public static final String EMAIL_KEY = "email_key";
     public static final String PASSWORD_KEY = "password_key";
+    private Toolbar toolbar;
 
     SharedPreferences sharedPreferences;
     String fullName, email, password;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
+
+        toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+
 
         EditText fullNameEditText = findViewById(R.id.idEdtFullName);
         EditText emailEditText = findViewById(R.id.idEdtEmailSignUp);
@@ -66,9 +80,14 @@ public class SignUpActivity extends AppCompatActivity {
 
             }
         });
-
-
-
-
+    }
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                this.finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
