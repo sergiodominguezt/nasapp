@@ -8,6 +8,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
 
+import java.util.Date;
+
 public class DBHelper extends SQLiteOpenHelper {
 
 
@@ -17,13 +19,16 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String COLUMN_PASSWORD = "PASSWORD";
     public static final String COLUMN_ID = "ID";
 
+    public static final String REGISTRATION_DATE = "REGISTRATION_DATE";
+
+
     public DBHelper(@Nullable Context context) {
         super(context, "user.db", null, 1);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String createTable = "CREATE TABLE " + USERS_TABLE + " (" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + COLUMN_FULL_NAME + " TEXT, " + COLUMN_EMAIL + " TEXT, " + COLUMN_PASSWORD + " TEXT )";
+        String createTable = "CREATE TABLE " + USERS_TABLE + " (" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + COLUMN_FULL_NAME + " TEXT, " + COLUMN_EMAIL + " TEXT, " + COLUMN_PASSWORD + " TEXT, " + REGISTRATION_DATE + " DATETIME DEFAULT CURRENT_TIMESTAMP)";
 
         db.execSQL(createTable);
 
@@ -74,4 +79,31 @@ public class DBHelper extends SQLiteOpenHelper {
         return false;
 
     }
+
+    public int getUserById(String email, String password) {
+        String[] columns = { COLUMN_ID };
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = COLUMN_EMAIL + " = ?";
+        String[] selectionArgs = { email };
+
+        // Check if password argument is not null
+        if (password != null) {
+            query += " AND " + COLUMN_PASSWORD + " = ?";
+            selectionArgs = new String[] { email, password };
+        }
+
+        Cursor cursor = db.query(USERS_TABLE, columns, query, selectionArgs, null, null, null);
+
+        int id = 0;
+        if (cursor.moveToFirst()) {
+            id = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_ID));
+        }
+        cursor.close();
+        db.close();
+
+        return id;
+
+    }
+
+
 }

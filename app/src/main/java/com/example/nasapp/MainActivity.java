@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
 
     SharedPreferences sharedPreferences;
     String email, password;
+    int userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +59,8 @@ public class MainActivity extends AppCompatActivity {
 
                         editor.apply();
                         Intent intent = new Intent(MainActivity.this, HomeActivity.class);
+
+                        intent.putExtra("USER_ID", userId);
                         startActivity(intent);
                         finish();
                     } else {

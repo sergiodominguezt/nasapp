@@ -80,13 +80,14 @@
         android:text="@string/login" />
 
     <Button
+        android:id="@+id/idBtnRegister"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/idBtnRegister"
         android:layout_below="@id/idEdtBtnLogin"
-        android:layout_marginTop="20dp"
         android:layout_marginStart="80dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="80dp"
+        android:layout_marginBottom="141dp"
         android:text="@string/register" />
 
 

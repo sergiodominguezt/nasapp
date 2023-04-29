@@ -10,19 +10,52 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/idWelcome"
-        android:layout_centerInParent="true"
+        android:layout_marginTop="50dp"
         android:padding="5dp"
         android:textAlignment="center"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
         android:textSize="20sp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/idData"
+        android:layout_below="@id/idWelcome"
+        android:textSize="18sp"
+        android:text="data"
+        android:layout_centerHorizontal="true"
+        android:textAlignment="center"
+        android:textColor="#FF1F1F"
+        />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/idRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="494dp"
+        android:layout_below="@id/idWelcome"
+        android:scrollbars="vertical"
+        android:scrollbarThumbVertical="@color/black"
+        android:scrollbarTrackVertical="@color/gray"
+        />
+
+
+    <Button
+        android:id="@+id/idBtnLogout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="80dp"
+        android:layout_marginTop="600dp"
+        android:layout_marginEnd="80dp"
+        android:text="@string/logout" />
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/idBtnLogout"
-        android:layout_below="@id/idWelcome"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginTop="20dp"
-        android:text="@string/logout" />
+        android:id="@+id/idDownloadData"
+        android:layout_below="@id/idBtnLogout"
+        android:layout_marginStart="80dp"
+        android:layout_marginEnd="80dp"
+        android:text="@string/download_data" />
 
 </RelativeLayout>
