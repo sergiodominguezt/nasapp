@@ -18,6 +18,11 @@
             android:label="@string/title_activity_home"
             android:theme="@style/Theme.Nasapp" />
         <activity
+            android:name=".AsteroidList"
+            android:exported="false"
+            android:label="@string/title_activity_home"
+            android:theme="@style/Theme.Nasapp" />
+        <activity
             android:name=".SignUpActivity"
             android:exported="false"
             android:label="@string/title_activity_signup"

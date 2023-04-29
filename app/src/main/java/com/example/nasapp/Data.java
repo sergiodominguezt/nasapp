@@ -1,17 +1,14 @@
 package com.example.nasapp;
 
 public class Data {
-
     private String id;
     private String name;
     private int userId;
-
 
     public Data(String id, String name, int userId) {
         this.id = id;
         this.name = name;
         this.userId = userId;
-
     }
 
     public String getId() {
@@ -29,8 +26,6 @@ public class Data {
     public void setName(String name) {
         this.name = name;
     }
-
-
 }
 
 

@@ -24,6 +24,16 @@ public class AsteroidModel {
     public AsteroidModel() {
     }
 
+    public AsteroidModel(long id, String name, boolean hazardousAsteroid, String neoReferenceId, String nasaJplUrl, boolean isSentryObject, String absoluteMagnitude) {
+        this.id = id;
+        this.name = name;
+        this.hazardousAsteroid = hazardousAsteroid;
+        this.neoReferenceId = neoReferenceId;
+        this.nasaJplUrl = nasaJplUrl;
+        this.isSentryObject = isSentryObject;
+        this.absoluteMagnitude = absoluteMagnitude;
+    }
+
     public long getId() {
         return id;
     }
@@ -48,28 +58,28 @@ public class AsteroidModel {
         this.hazardousAsteroid = hazardousAsteroid;
     }
 
-    public String getKilometersPerHour() {
+    public String getNeoReferenceId() {
         return neoReferenceId;
     }
 
-    public void setKilometersPerHour(String kilometersPerHour) {
-        this.neoReferenceId = kilometersPerHour;
+    public void setNeoReferenceId(String neoReferenceId) {
+        this.neoReferenceId = neoReferenceId;
     }
 
-    public String getCloseApproachDate() {
+    public String getNasaJplUrl() {
         return nasaJplUrl;
     }
 
-    public void setCloseApproachDate(String closeApproachDate) {
-        this.nasaJplUrl = closeApproachDate;
+    public void setNasaJplUrl(String nasaJplUrl) {
+        this.nasaJplUrl = nasaJplUrl;
     }
 
-    public boolean getSentryObject() {
+    public boolean isSentryObject() {
         return isSentryObject;
     }
 
     public void setSentryObject(boolean sentryObject) {
-        this.isSentryObject = sentryObject;
+        isSentryObject = sentryObject;
     }
 
     public String getAbsoluteMagnitude() {

@@ -4,12 +4,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,6 +20,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.nasapp.database.DBAsteroidHelper;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -34,11 +33,8 @@ import java.util.Iterator;
 public class HomeActivity extends AppCompatActivity {
     public static final String SHARED_PREFS = "shared_prefs";
     public static final String EMAIL_KEY = "email_key";
-    public static final String PASSWORD_KEY = "password_key";
-
     SharedPreferences sharedPreferences;
     String email;
-    String password;
     String url;
 
     private RecyclerView recyclerView;
@@ -46,20 +42,12 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-
         sharedPreferences = getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
-
         email = sharedPreferences.getString(EMAIL_KEY, null);
-
         TextView welcome = findViewById(R.id.idWelcome);
-        TextView data = findViewById(R.id.idData);
-
         url = "https://api.nasa.gov/neo/rest/v1/feed?start_date=2023-04-26&end_date=2023-04-27&api_key=R8LmGPZJGAirleebrNnMmuH3XtidhC7XmiE0oKtu";
-
         recyclerView = findViewById(R.id.idRecyclerView);
-
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
         welcome.setText("Welcome \n" + email);
         Button logoutBtn = findViewById(R.id.idBtnLogout);
         logoutBtn.setOnClickListener(new View.OnClickListener() {
@@ -72,22 +60,22 @@ public class HomeActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
         Button downloadBtn = findViewById(R.id.idDownloadData);
-
         downloadBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DBHelper dbHelper = new DBHelper(HomeActivity.this);
-                int userId = dbHelper.getUserById(email, password);
-                volleyGet(userId);
+                Intent intent = new Intent(HomeActivity.this, AsteroidList.class);
+                startActivity(intent);
+
+//                ArrayAdapter asteroidArrayAdapter = new ArrayAdapter<AsteroidList>(HomeActivity.this, android.R.layout.simple_list_item_1, everyAsteroid);
+
+
+//                volleyGet(userId);
             }
         });
     }
-
     public void volleyGet(int userId) {
         ArrayList<Data> dataResponses = new ArrayList<>();
-
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
@@ -121,7 +109,6 @@ public class HomeActivity extends AppCompatActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
             }
         }, new Response.ErrorListener() {
             @Override

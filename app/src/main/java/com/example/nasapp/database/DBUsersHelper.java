@@ -1,4 +1,4 @@
-package com.example.nasapp;
+package com.example.nasapp.database;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -8,24 +8,19 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
 
-import java.util.Date;
+import com.example.nasapp.UserModel;
 
-public class DBHelper extends SQLiteOpenHelper {
-
-
+public class DBUsersHelper extends SQLiteOpenHelper {
     public static final String USERS_TABLE = "USERS_TABLE";
     public static final String COLUMN_FULL_NAME = "FULL_NAME";
     public static final String COLUMN_EMAIL = "EMAIL";
     public static final String COLUMN_PASSWORD = "PASSWORD";
     public static final String COLUMN_ID = "ID";
-
     public static final String REGISTRATION_DATE = "REGISTRATION_DATE";
 
-
-    public DBHelper(@Nullable Context context) {
+    public DBUsersHelper(@Nullable Context context) {
         super(context, "user.db", null, 1);
     }
-
     @Override
     public void onCreate(SQLiteDatabase db) {
         String createTable = "CREATE TABLE " + USERS_TABLE + " (" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + COLUMN_FULL_NAME + " TEXT, " + COLUMN_EMAIL + " TEXT, " + COLUMN_PASSWORD + " TEXT, " + REGISTRATION_DATE + " DATETIME DEFAULT CURRENT_TIMESTAMP)";
@@ -33,16 +28,13 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL(createTable);
 
     }
-
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
     }
-
     public boolean addUser(UserModel userModel) {
         SQLiteDatabase db = this.getReadableDatabase();
         ContentValues cv = new ContentValues();
-
         cv.put(COLUMN_FULL_NAME, userModel.getName());
         cv.put(COLUMN_EMAIL, userModel.getEmail());
         cv.put(COLUMN_PASSWORD, userModel.getPassword());
@@ -54,9 +46,7 @@ public class DBHelper extends SQLiteOpenHelper {
         } else {
             return true;
         }
-
     }
-
     public boolean checkUser(String email, String password) {
         String[] columns = {
           COLUMN_ID
@@ -77,7 +67,6 @@ public class DBHelper extends SQLiteOpenHelper {
             return true;
         }
         return false;
-
     }
 
     public int getUserById(String email, String password) {
@@ -100,10 +89,6 @@ public class DBHelper extends SQLiteOpenHelper {
         }
         cursor.close();
         db.close();
-
         return id;
-
     }
-
-
 }

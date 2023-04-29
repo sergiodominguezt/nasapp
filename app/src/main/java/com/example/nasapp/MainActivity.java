@@ -10,12 +10,9 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.material.snackbar.Snackbar;
-
-import org.w3c.dom.Text;
+import com.example.nasapp.database.DBUsersHelper;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -31,57 +28,40 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         EditText emailEditText = findViewById(R.id.idEdtEmail);
         EditText passwordEditText = findViewById(R.id.idEdtPassword);
         Button loginButton = findViewById(R.id.idEdtBtnLogin);
         Button registerButton = findViewById(R.id.idBtnRegister);
-
         sharedPreferences = getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
-
         email = sharedPreferences.getString("EMAIL_KEY", null);
         password = sharedPreferences.getString("PASSWORD_KEY", null);
-
-        loginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (TextUtils.isEmpty(emailEditText.getText().toString()) && TextUtils.isEmpty(passwordEditText.getText().toString())) {
-                    Toast.makeText(MainActivity.this, "Please Enter Email and Password", Toast.LENGTH_SHORT).show();
+        loginButton.setOnClickListener(v -> {
+            if (TextUtils.isEmpty(emailEditText.getText().toString()) && TextUtils.isEmpty(passwordEditText.getText().toString())) {
+                Toast.makeText(MainActivity.this, "Please Enter Email and Password", Toast.LENGTH_SHORT).show();
+            } else {
+                DBUsersHelper dbUsersHelper = new DBUsersHelper(MainActivity.this);
+                if (dbUsersHelper.checkUser(emailEditText.getText().toString().trim(), passwordEditText.getText().toString().trim())) {
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString(EMAIL_KEY, emailEditText.getText().toString());
+                    editor.putString(PASSWORD_KEY, passwordEditText.getText().toString());
+                    editor.apply();
+                    Intent intent = new Intent(MainActivity.this, HomeActivity.class);
+                    intent.putExtra("USER_ID", userId);
+                    startActivity(intent);
+                    finish();
                 } else {
-
-                    DBHelper dbHelper = new DBHelper(MainActivity.this);
-
-                    if (dbHelper.checkUser(emailEditText.getText().toString().trim(), passwordEditText.getText().toString().trim())) {
-                        SharedPreferences.Editor editor = sharedPreferences.edit();
-
-                        editor.putString(EMAIL_KEY, emailEditText.getText().toString());
-                        editor.putString(PASSWORD_KEY, passwordEditText.getText().toString());
-
-                        editor.apply();
-                        Intent intent = new Intent(MainActivity.this, HomeActivity.class);
-
-                        intent.putExtra("USER_ID", userId);
-                        startActivity(intent);
-                        finish();
-                    } else {
-                        Toast.makeText(MainActivity.this, "Wrong email or password", Toast.LENGTH_SHORT).show();
-                    }
-
+                    Toast.makeText(MainActivity.this, "Wrong email or password", Toast.LENGTH_SHORT).show();
                 }
             }
         });
-
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, SignUpActivity.class);
                 startActivity(intent);
-
             }
         });
-
     }
-
     @Override
     protected void onStart() {
         super.onStart();
@@ -90,6 +70,4 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         }
     }
-
-
 }
