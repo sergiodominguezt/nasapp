@@ -19,9 +19,6 @@ public class AsteroidList extends AppCompatActivity implements SelectListener{
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_asteroidlist);
-
-
-
         recyclerView = findViewById(R.id.recyclerView);
         Button btn = findViewById(R.id.buttonDownload);
 

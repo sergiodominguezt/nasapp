@@ -34,6 +34,8 @@ public class DBAsteroidHelper extends SQLiteOpenHelper {
     }
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        db.execSQL("DROP TABLE " + ASTEROIDS_TABLE );
+        onCreate(db);
 
     }
     public void insertAsteroids(String name, boolean hazardousAsteroid, String neoReferenceId, String nasaJplUrl, boolean isSentryObject, String absoluteMagnitude, long userId) {
