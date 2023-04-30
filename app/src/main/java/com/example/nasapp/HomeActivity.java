@@ -4,12 +4,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -19,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -31,8 +30,8 @@ import com.example.nasapp.database.DBUsersHelper;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 
 
@@ -56,7 +55,13 @@ public class HomeActivity extends AppCompatActivity implements SelectListener{
         url = "https://api.nasa.gov/neo/rest/v1/feed?start_date=2023-04-26&end_date=2023-04-30&api_key=R8LmGPZJGAirleebrNnMmuH3XtidhC7XmiE0oKtu";
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        TextView bol = findViewById(R.id.idBoolean);
+        bol.setText("false");
+
+
         welcome.setText("Welcome \n" + email);
+        displayData();
         Button logoutBtn = findViewById(R.id.idBtnLogout);
         asteroidDetailsLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
                 result -> {
@@ -79,14 +84,30 @@ public class HomeActivity extends AppCompatActivity implements SelectListener{
         downloadBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    displayData();
                     volleyGet(userId);
             }
         });
     }
     public void volleyGet(int userId) {
-        ArrayList<Data> dataResponses = new ArrayList<>();
+
         RequestQueue requestQueue = Volley.newRequestQueue(this);
+        JsonObjectRequest requestTest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    System.out.println("Response: " + response.toString());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                System.out.println("Response: " + response.toString());
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                System.out.println("Error: " + error.toString());
+            }
+        });
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -114,15 +135,23 @@ public class HomeActivity extends AppCompatActivity implements SelectListener{
                     e.printStackTrace();
                 }
             }
-        }, error -> error.printStackTrace());
-        requestQueue.add(jsonObjectRequest);
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                System.out.println("Error: " + error.toString());
+            }
+        });
+        jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(100000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        displayData();
     }
     private void displayData() {
         DBAsteroidHelper dbAsteroidHelper = new DBAsteroidHelper(this, userId);
         DBUsersHelper dbUsersHelper = new DBUsersHelper(this);
+
         sharedPreferences = getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
         email = sharedPreferences.getString(EMAIL_KEY, null);
         userId = dbUsersHelper.getUserById(email);
+
         recyclerView = findViewById(R.id.recyclerView);
         adapter = new MyAdapter(dbAsteroidHelper.getAllAsteroids(userId),HomeActivity.this, this);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
