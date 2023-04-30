@@ -11,4 +11,5 @@
     <string name="title_activity_signup">SignUpActivity</string>
     <string name="error_message_email">Enter Valid Email</string>
     <string name="download_data">Download Data</string>
+    <string name="asteroid_detail">AsteroidDetailActivity</string>
 </resources>

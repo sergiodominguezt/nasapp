@@ -40,13 +40,22 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         AsteroidModel asteroidModel = asteroidModels.get(position);
         holder.name.setText(asteroidModel.getName());
-        holder.hazardousAsteroid.setText(asteroidModel.getName());
-        holder.neoReferenceId.setText(asteroidModel.getName());
-        holder.nasaJplUrl.setText(asteroidModel.getName());
-        holder.isSentryObject.setText(asteroidModel.getName());
-        holder.absoluteMagnitude.setText(asteroidModel.getName());
+        holder.hazardousAsteroid.setText(asteroidModel.isHazardousAsteroid() ? "Yes" : "No");
+//        holder.neoReferenceId.setText(asteroidModel.getName());
+//        holder.nasaJplUrl.setText(asteroidModel.getName());
+//        holder.isSentryObject.setText(asteroidModel.getName());
+//        holder.absoluteMagnitude.setText(asteroidModel.getName());
 
-        holder.cardView.setOnClickListener(v -> listener.onItemClicked(asteroidModel));
+        holder.cardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onItemClicked(asteroidModel);
+            }
+        });
+
+
+
+
 
 
 
@@ -63,12 +72,12 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.asteroidName);
-            referenceId = itemView.findViewById(R.id.referenceId);
+//            referenceId = itemView.findViewById(R.id.referenceId);
             hazardousAsteroid = itemView.findViewById(R.id.dangerousAsteroid);
-            neoReferenceId = itemView.findViewById(R.id.neoReferenceId);
-            nasaJplUrl = itemView.findViewById(R.id.nasaJplUrl);
-            isSentryObject = itemView.findViewById(R.id.isSentryObject);
-            absoluteMagnitude = itemView.findViewById(R.id.absoluteMagnitude);
+//            neoReferenceId = itemView.findViewById(R.id.neoReferenceId);
+//            nasaJplUrl = itemView.findViewById(R.id.nasaJplUrl);
+//            isSentryObject = itemView.findViewById(R.id.isSentryObject);
+//            absoluteMagnitude = itemView.findViewById(R.id.absoluteMagnitude);
 
             cardView = itemView.findViewById(R.id.cardAsteroidEntry);
         }

@@ -48,14 +48,36 @@ public class DBAsteroidHelper extends SQLiteOpenHelper {
         values.put(COLUMN_IS_SENTRY_OBJECT, isSentryObject);
         values.put(COLUMN_ABSOLUTE_MAGNITUDE, absoluteMagnitude);
         values.put(COLUMN_USER_ID, userId);
-        db.insert(ASTEROIDS_TABLE, null, values);
-        db.close();
+
+        //don't insert if already exists in db
+        String query = "SELECT * FROM " + ASTEROIDS_TABLE + " WHERE " + COLUMN_NEO_REFERENCE_ID + " = ? AND " + COLUMN_USER_ID + " = ?";
+        Cursor cursor = db.rawQuery(query, new String[]{neoReferenceId, String.valueOf(userId)});
+
+        if (cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            name = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ASTEROID_NAME));
+            hazardousAsteroid = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_HAZARDOUS_ASTEROID)) != 0;
+            nasaJplUrl = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_NASA_JPL_URL));
+            isSentryObject = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_IS_SENTRY_OBJECT)) != 0;
+            absoluteMagnitude = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ABSOLUTE_MAGNITUDE));
+            if (!name.equals(name) || hazardousAsteroid != hazardousAsteroid || !nasaJplUrl.equals(nasaJplUrl) || isSentryObject != isSentryObject || !absoluteMagnitude.equals(absoluteMagnitude)) {
+                String selection = COLUMN_NEO_REFERENCE_ID + " = ? AND " + COLUMN_USER_ID + " = ?";
+                String[] selectionArgs = {neoReferenceId, String.valueOf(userId)};
+                int conflict = SQLiteDatabase.CONFLICT_REPLACE;
+                db.insertWithOnConflict(ASTEROIDS_TABLE, null, values, conflict);
+                db.close();
+            }
+        } else {
+            db.insert(ASTEROIDS_TABLE, null, values);
+            db.close();
+        }
+
     }
-    public ArrayList<AsteroidModel> getAllAsteroids() {
+    public ArrayList<AsteroidModel> getAllAsteroids(long userId) {
         ArrayList<AsteroidModel> returnList = new ArrayList<>();
-        String query = "SELECT * FROM " + ASTEROIDS_TABLE;
+        String query = "SELECT * FROM " + ASTEROIDS_TABLE + " WHERE " + COLUMN_USER_ID + " = ? ";
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery(query, null);
+        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(userId)});
         while (cursor.moveToNext()) {
             AsteroidModel asteroidModel = new AsteroidModel(
               cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_ID)),

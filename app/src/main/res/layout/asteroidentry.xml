@@ -42,31 +42,31 @@
 
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_gravity="center_vertical">
+<!--        <LinearLayout-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:orientation="horizontal"-->
+<!--            android:layout_gravity="center_vertical">-->
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Reference ID: "
-                android:textSize="24dp"
-                android:textColor="@color/black"
-                style="bold"
-                />
-            <TextView
-                android:id="@+id/referenceId"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="24dp"
-                android:textColor="@color/black"
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="Reference ID: "-->
+<!--                android:textSize="24dp"-->
+<!--                android:textColor="@color/black"-->
+<!--                style="bold"-->
+<!--                />-->
+<!--            <TextView-->
+<!--                android:id="@+id/referenceId"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:textSize="24dp"-->
+<!--                android:textColor="@color/black"-->
 
-                />
+<!--                />-->
 
 
-        </LinearLayout>
+<!--        </LinearLayout>-->
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -94,109 +94,109 @@
 
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_gravity="center_vertical">
+<!--        <LinearLayout-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:orientation="horizontal"-->
+<!--            android:layout_gravity="center_vertical">-->
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Neo Reference ID: "
-                android:textSize="24dp"
-                android:textColor="@color/black"
-                style="bold"
-                />
-            <TextView
-                android:id="@+id/neoReferenceId"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="24dp"
-                android:textColor="@color/black"
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="Neo Reference ID: "-->
+<!--                android:textSize="24dp"-->
+<!--                android:textColor="@color/black"-->
+<!--                style="bold"-->
+<!--                />-->
+<!--            <TextView-->
+<!--                android:id="@+id/neoReferenceId"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:textSize="24dp"-->
+<!--                android:textColor="@color/black"-->
 
-                />
-
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_gravity="center_vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Nasa Jpl Url: "
-                android:textSize="24dp"
-                android:textColor="@color/black"
-                style="bold"
-                />
-            <TextView
-                android:id="@+id/nasaJplUrl"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="24dp"
-                android:textColor="@color/black"
-
-                />
+<!--                />-->
 
 
-        </LinearLayout>
+<!--        </LinearLayout>-->
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_gravity="center_vertical">
+<!--        <LinearLayout-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:orientation="horizontal"-->
+<!--            android:layout_gravity="center_vertical">-->
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Is Sentry Object: "
-                android:textSize="24dp"
-                android:textColor="@color/black"
-                style="bold"
-                />
-            <TextView
-                android:id="@+id/isSentryObject"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="24dp"
-                android:textColor="@color/black"
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="Nasa Jpl Url: "-->
+<!--                android:textSize="24dp"-->
+<!--                android:textColor="@color/black"-->
+<!--                style="bold"-->
+<!--                />-->
+<!--            <TextView-->
+<!--                android:id="@+id/nasaJplUrl"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:textSize="24dp"-->
+<!--                android:textColor="@color/black"-->
 
-                />
-
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_gravity="center_vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Absolute Magnitude: "
-                android:textSize="24dp"
-                android:textColor="@color/black"
-                style="bold"
-                />
-            <TextView
-                android:id="@+id/absoluteMagnitude"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="24dp"
-                android:textColor="@color/black"
-
-                />
+<!--                />-->
 
 
-        </LinearLayout>
+<!--        </LinearLayout>-->
+
+<!--        <LinearLayout-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:orientation="horizontal"-->
+<!--            android:layout_gravity="center_vertical">-->
+
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="Is Sentry Object: "-->
+<!--                android:textSize="24dp"-->
+<!--                android:textColor="@color/black"-->
+<!--                style="bold"-->
+<!--                />-->
+<!--            <TextView-->
+<!--                android:id="@+id/isSentryObject"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:textSize="24dp"-->
+<!--                android:textColor="@color/black"-->
+
+<!--                />-->
+
+
+<!--        </LinearLayout>-->
+
+<!--        <LinearLayout-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:orientation="horizontal"-->
+<!--            android:layout_gravity="center_vertical">-->
+
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="Absolute Magnitude: "-->
+<!--                android:textSize="24dp"-->
+<!--                android:textColor="@color/black"-->
+<!--                style="bold"-->
+<!--                />-->
+<!--            <TextView-->
+<!--                android:id="@+id/absoluteMagnitude"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:textSize="24dp"-->
+<!--                android:textColor="@color/black"-->
+
+<!--                />-->
+
+
+<!--        </LinearLayout>-->
 
 
 

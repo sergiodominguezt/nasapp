@@ -27,7 +27,7 @@ public class AsteroidList extends AppCompatActivity implements SelectListener{
     private void displayData() {
         DBAsteroidHelper dbAsteroidHelper = new DBAsteroidHelper(this, userId);
         recyclerView = findViewById(R.id.recyclerView);
-        adapter = new MyAdapter(dbAsteroidHelper.getAllAsteroids(),AsteroidList.this, this);
+        adapter = new MyAdapter(dbAsteroidHelper.getAllAsteroids(userId),AsteroidList.this, this);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();

@@ -1,31 +1,110 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:cardElevation="8dp"
-    app:cardCornerRadius="8dp"
-    android:layout_margin="8dp"
-    android:id="@+id/detail_container">
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".AsteroidDetailActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/idToolbarDetailed"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:elevation="2dp" />
+
+
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:orientation="vertical">
+        android:layout_margin="4dp"
+        android:orientation="vertical"
+        android:layout_below="@id/idToolbarDetailed">
+
         <TextView
             android:id="@+id/asteroidNameLabel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Asteroid name:"
+            android:text="Asteroid name"
             android:layout_margin="16dp" />
         <TextView
             android:id="@+id/asteroidNameDetail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+
+            android:layout_margin="16dp"
+            android:textAlignment="center"/>
+
+        <TextView
+            android:id="@+id/asteroidNasaJplUrl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Nasa Jpl Url"
             android:layout_margin="16dp" />
+        <TextView
+            android:id="@+id/asteroidNasaJplUrlDetail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:textAlignment="center"/>
+        <TextView
+            android:id="@+id/asteroidDangerousLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Is a dangerous asteroid?"
+            android:layout_margin="16dp" />
+        <TextView
+            android:id="@+id/asteroidDangerousDetail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:layout_margin="16dp"
+            android:textAlignment="center"/>
+        <TextView
+            android:id="@+id/asteroidNeoIdLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Neo Reference Id"
+            android:layout_margin="16dp" />
+        <TextView
+            android:id="@+id/asteroidNeoIdDetail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:layout_margin="16dp"
+            android:textAlignment="center"/>
+        <TextView
+            android:id="@+id/asteroidIsSentryLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Is Sentry Object?"
+            android:layout_margin="16dp" />
+        <TextView
+            android:id="@+id/asteroidIsSentryDetail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:layout_margin="16dp"
+            android:textAlignment="center"/>
+        <TextView
+            android:id="@+id/asteroidAbsoluteLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Absolute Magnitude"
+            android:layout_margin="16dp" />
+        <TextView
+            android:id="@+id/asteroidAbsoluteDetail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:layout_margin="16dp"
+            android:textAlignment="center"/>
+
     </LinearLayout>
 
 
 
-</androidx.cardview.widget.CardView>
+
+
+</RelativeLayout>

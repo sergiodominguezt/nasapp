@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
                     editor.putString(PASSWORD_KEY, passwordEditText.getText().toString());
                     editor.apply();
                     Intent intent = new Intent(MainActivity.this, HomeActivity.class);
-                    intent.putExtra("USER_ID", userId);
+                    intent.putExtra("email", email);
                     startActivity(intent);
                     finish();
                 } else {

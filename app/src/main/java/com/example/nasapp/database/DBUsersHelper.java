@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import androidx.annotation.Nullable;
 
@@ -69,24 +70,22 @@ public class DBUsersHelper extends SQLiteOpenHelper {
         return false;
     }
 
-    public int getUserById(String email, String password) {
+    public int getUserById(String email) {
         String[] columns = { COLUMN_ID };
         SQLiteDatabase db = this.getReadableDatabase();
         String query = COLUMN_EMAIL + " = ?";
         String[] selectionArgs = { email };
 
         // Check if password argument is not null
-        if (password != null) {
-            query += " AND " + COLUMN_PASSWORD + " = ?";
-            selectionArgs = new String[] { email, password };
-        }
+
 
         Cursor cursor = db.query(USERS_TABLE, columns, query, selectionArgs, null, null, null);
 
-        int id = 0;
+        int id = -1;
         if (cursor.moveToFirst()) {
             id = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_ID));
         }
+        Log.d("DB ERROR", "getUserById: " + email + id );
         cursor.close();
         db.close();
         return id;

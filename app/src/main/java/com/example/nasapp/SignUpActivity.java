@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+
 import com.example.nasapp.database.DBUsersHelper;
 
 public class SignUpActivity extends AppCompatActivity {
@@ -28,10 +29,12 @@ public class SignUpActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
+
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
+
         EditText fullNameEditText = findViewById(R.id.idEdtFullName);
         EditText emailEditText = findViewById(R.id.idEdtEmailSignUp);
         EditText passwordEditText = findViewById(R.id.idEdtPasswordSignUp);
