@@ -18,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
 
     public static final String SHARED_PREFS = "shared_prefs";
     public static final String EMAIL_KEY = "email_key";
-    public static final String PASSWORD_KEY = "password_key";
+    public static final String ID_KEY = "id_key";
 
     SharedPreferences sharedPreferences;
     String email, password;
@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
                     if (dbUsersHelper.checkUser(emailEditText.getText().toString().trim(), passwordEditText.getText().toString().trim())) {
                         SharedPreferences.Editor editor = sharedPreferences.edit();
                         editor.putString(EMAIL_KEY, emailEditText.getText().toString());
-                        editor.putString(PASSWORD_KEY, passwordEditText.getText().toString());
+                        editor.putInt(ID_KEY, dbUsersHelper.getUserById(emailEditText.getText().toString()));
                         editor.apply();
 
                         Intent intent = new Intent(MainActivity.this, HomeActivity.class);

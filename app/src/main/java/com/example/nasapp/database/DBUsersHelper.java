@@ -75,10 +75,7 @@ public class DBUsersHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         String query = COLUMN_EMAIL + " = ?";
         String[] selectionArgs = { email };
-
         // Check if password argument is not null
-
-
         Cursor cursor = db.query(USERS_TABLE, columns, query, selectionArgs, null, null, null);
 
         int id = -1;

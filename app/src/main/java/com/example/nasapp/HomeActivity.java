@@ -1,5 +1,6 @@
 package com.example.nasapp;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -7,6 +8,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 
@@ -22,6 +24,9 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.BasicNetwork;
+import com.android.volley.toolbox.DiskBasedCache;
+import com.android.volley.toolbox.HurlStack;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.nasapp.database.DBAsteroidHelper;
@@ -36,21 +41,32 @@ import java.util.Iterator;
 
 
 public class HomeActivity extends AppCompatActivity implements SelectListener{
+    RequestQueue requestQueue;
     public static final String SHARED_PREFS = "shared_prefs";
     public static final String EMAIL_KEY = "email_key";
+    public static final String ID_KEY = "id_key";
     SharedPreferences sharedPreferences;
     String email;
-    String password;
     String url;
     RecyclerView recyclerView;
     MyAdapter adapter;
     int userId;
+    ProgressBar progressBar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        BasicNetwork basicNetwork = new BasicNetwork(new HurlStack());
+        DiskBasedCache cacheDir = new DiskBasedCache(getCacheDir(), 1024 * 1024);
+
+        requestQueue = new RequestQueue(cacheDir, basicNetwork);
+        requestQueue.start();
+
         sharedPreferences = getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
         email = sharedPreferences.getString(EMAIL_KEY, null);
+
         TextView welcome = findViewById(R.id.idWelcome);
         url = "https://api.nasa.gov/neo/rest/v1/feed?start_date=2023-04-26&end_date=2023-04-30&api_key=R8LmGPZJGAirleebrNnMmuH3XtidhC7XmiE0oKtu";
         recyclerView = findViewById(R.id.recyclerView);
@@ -61,8 +77,10 @@ public class HomeActivity extends AppCompatActivity implements SelectListener{
 
 
         welcome.setText("Welcome \n" + email);
-        displayData();
+
         Button logoutBtn = findViewById(R.id.idBtnLogout);
+        progressBar = findViewById(R.id.idProgressBar);
+
         asteroidDetailsLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
                 result -> {
                     if (result.getResultCode() == RESULT_OK) {
@@ -70,6 +88,7 @@ public class HomeActivity extends AppCompatActivity implements SelectListener{
                     }
 
                 });
+        displayData();
         logoutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -84,30 +103,13 @@ public class HomeActivity extends AppCompatActivity implements SelectListener{
         downloadBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    volleyGet(userId);
+                progressBar.setVisibility(View.VISIBLE);
+                volleyGet();
             }
         });
     }
-    public void volleyGet(int userId) {
-
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-        JsonObjectRequest requestTest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                try {
-                    System.out.println("Response: " + response.toString());
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                System.out.println("Response: " + response.toString());
-
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                System.out.println("Error: " + error.toString());
-            }
-        });
+    public void volleyGet() {
+        int userId = sharedPreferences.getInt(ID_KEY, 0);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -127,6 +129,8 @@ public class HomeActivity extends AppCompatActivity implements SelectListener{
                             boolean isSentryObject = asteroid.getBoolean("is_sentry_object");
                             String absoluteMagnitude = asteroid.getString("absolute_magnitude_h");
 
+
+
                             DBAsteroidHelper dbAsteroidHelper = new DBAsteroidHelper(HomeActivity.this, userId);
                             dbAsteroidHelper.insertAsteroids(name, hazardous, neoReferenceId, nasaJplUrl, isSentryObject, absoluteMagnitude, userId);
                         }
@@ -134,29 +138,35 @@ public class HomeActivity extends AppCompatActivity implements SelectListener{
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+                displayData();
             }
+
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                System.out.println("Error: " + error.toString());
+                System.out.println("Error getting data" + error.toString());
+                progressBar.setVisibility(View.GONE);
             }
         });
-        jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(100000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-        displayData();
+
+        jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(500000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        requestQueue.add(jsonObjectRequest);
+
     }
     private void displayData() {
         DBAsteroidHelper dbAsteroidHelper = new DBAsteroidHelper(this, userId);
         DBUsersHelper dbUsersHelper = new DBUsersHelper(this);
 
         sharedPreferences = getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
-        email = sharedPreferences.getString(EMAIL_KEY, null);
-        userId = dbUsersHelper.getUserById(email);
+        userId = sharedPreferences.getInt(ID_KEY, 0);
 
         recyclerView = findViewById(R.id.recyclerView);
         adapter = new MyAdapter(dbAsteroidHelper.getAllAsteroids(userId),HomeActivity.this, this);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
+
+        progressBar.setVisibility(View.GONE);
     }
     @Override
     public void onItemClicked(AsteroidModel asteroidModel) {
