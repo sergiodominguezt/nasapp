@@ -1,4 +1,4 @@
-package com.example.nasapp;
+package com.example.nasapp.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -12,27 +12,31 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 
+import com.example.nasapp.R;
+import com.example.nasapp.interfaces.SelectListener;
+import com.example.nasapp.models.AsteroidModel;
+
 import java.util.ArrayList;
 
 
-public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
+public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyViewHolder> {
     private Context context;
     private ArrayList<AsteroidModel> asteroidModels;
     private SelectListener listener;
 
     private AdapterView.OnItemClickListener onItemClickListener;
 
-    public MyAdapter(ArrayList<AsteroidModel> asteroidModels, Context context, SelectListener listener) {
+    public HomeAdapter(ArrayList<AsteroidModel> asteroidModels, Context context, SelectListener listener) {
         this.context = context;
         this.asteroidModels = asteroidModels;
-        this.listener =listener;
+        this.listener = listener;
     }
 
 
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.asteroidentry,parent,false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.asteroid_entry,parent,false);
         return new MyViewHolder(v);
     }
 
@@ -52,12 +56,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
                 listener.onItemClicked(asteroidModel);
             }
         });
-
-
-
-
-
-
 
     }
 

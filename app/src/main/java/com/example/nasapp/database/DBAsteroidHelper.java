@@ -8,7 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
 
-import com.example.nasapp.AsteroidModel;
+import com.example.nasapp.models.AsteroidModel;
 
 import java.util.ArrayList;
 

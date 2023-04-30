@@ -1,4 +1,4 @@
-package com.example.nasapp;
+package com.example.nasapp.models;
 
 public class AsteroidModel {
     private long id;

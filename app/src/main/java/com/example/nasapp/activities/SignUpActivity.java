@@ -1,7 +1,5 @@
-package com.example.nasapp;
+package com.example.nasapp.activities;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.MenuItem;
@@ -14,20 +12,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 
+import com.example.nasapp.R;
 import com.example.nasapp.database.DBUsersHelper;
+import com.example.nasapp.models.UserModel;
 
 public class SignUpActivity extends AppCompatActivity {
-
-    public static final String SHARED_PREFS = "shared_prefs";
-    public static final String FULL_NAME = "name_key";
-    public static final String EMAIL_KEY = "email_key";
-    public static final String PASSWORD_KEY = "password_key";
     private Toolbar toolbar;
-    SharedPreferences sharedPreferences;
-    String fullName, email, password;
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,22 +32,19 @@ public class SignUpActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-
-
         Button signUpBtn = findViewById(R.id.idBtnSignUp);
-        sharedPreferences = getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
-
-        fullName = sharedPreferences.getString("FULL_NAME", null);
-        email = sharedPreferences.getString("EMAIL_KEY", null);
-        password = sharedPreferences.getString("PASSWORD_KEY", null);
-
-
 
         signUpBtn.setOnClickListener(v -> {
             boolean isValidInput = true;
             String fullName = fullNameEditText.getText().toString();
             String email = emailEditText.getText().toString();
             String password = passwordEditText.getText().toString();
+
+            DBUsersHelper dbUsersHelper = new DBUsersHelper(SignUpActivity.this);
+            if (dbUsersHelper.checkEmail(email)) {
+                emailEditText.setError("Email already exists");
+                isValidInput = false;
+            }
 
             if (!fullName.matches("[a-zA-Z]+")) {
                 fullNameEditText.setError("Invalid name");
@@ -83,7 +70,6 @@ public class SignUpActivity extends AppCompatActivity {
                 Toast.makeText(SignUpActivity.this, "All fields required", Toast.LENGTH_SHORT).show();
                 isValidInput = false;
             }
-
             UserModel userModel;
             try {
                 userModel = new UserModel(-1, fullName,email,password);
@@ -92,7 +78,6 @@ public class SignUpActivity extends AppCompatActivity {
                 userModel = new UserModel(-1,"error","error", "error");
             }
             if (isValidInput == true) {
-                DBUsersHelper dbUsersHelper = new DBUsersHelper(SignUpActivity.this);
                 boolean success = dbUsersHelper.addUser(userModel);
                 Toast.makeText(SignUpActivity.this, "User created" + success, Toast.LENGTH_SHORT).show();
             }

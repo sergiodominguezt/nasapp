@@ -1,4 +1,4 @@
-package com.example.nasapp;
+package com.example.nasapp.models;
 
 public class Data {
     private String id;

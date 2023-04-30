@@ -1,6 +1,6 @@
-package com.example.nasapp;
+package com.example.nasapp.activities;
 
-import android.app.ProgressDialog;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -28,28 +28,32 @@ import com.android.volley.toolbox.BasicNetwork;
 import com.android.volley.toolbox.DiskBasedCache;
 import com.android.volley.toolbox.HurlStack;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
+import com.example.nasapp.R;
+import com.example.nasapp.adapters.HomeAdapter;
 import com.example.nasapp.database.DBAsteroidHelper;
 import com.example.nasapp.database.DBUsersHelper;
+import com.example.nasapp.interfaces.SelectListener;
+import com.example.nasapp.models.AsteroidModel;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
+
 
 import java.util.Iterator;
 
 
-public class HomeActivity extends AppCompatActivity implements SelectListener{
+public class HomeActivity extends AppCompatActivity implements SelectListener {
     RequestQueue requestQueue;
     public static final String SHARED_PREFS = "shared_prefs";
     public static final String EMAIL_KEY = "email_key";
     public static final String ID_KEY = "id_key";
+    public static final String NAME_KEY = "name_key";
     SharedPreferences sharedPreferences;
-    String email;
+    String email, name;
     String url;
     RecyclerView recyclerView;
-    MyAdapter adapter;
+    HomeAdapter adapter;
     int userId;
     ProgressBar progressBar;
 
@@ -66,17 +70,14 @@ public class HomeActivity extends AppCompatActivity implements SelectListener{
 
         sharedPreferences = getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
         email = sharedPreferences.getString(EMAIL_KEY, null);
+        name = sharedPreferences.getString(NAME_KEY, null);
 
         TextView welcome = findViewById(R.id.idWelcome);
         url = "https://api.nasa.gov/neo/rest/v1/feed?start_date=2023-04-26&end_date=2023-04-30&api_key=R8LmGPZJGAirleebrNnMmuH3XtidhC7XmiE0oKtu";
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        TextView bol = findViewById(R.id.idBoolean);
-        bol.setText("false");
-
-
-        welcome.setText("Welcome \n" + email);
+        welcome.setText("Welcome \n" + name);
 
         Button logoutBtn = findViewById(R.id.idBtnLogout);
         progressBar = findViewById(R.id.idProgressBar);
@@ -161,7 +162,7 @@ public class HomeActivity extends AppCompatActivity implements SelectListener{
         userId = sharedPreferences.getInt(ID_KEY, 0);
 
         recyclerView = findViewById(R.id.recyclerView);
-        adapter = new MyAdapter(dbAsteroidHelper.getAllAsteroids(userId),HomeActivity.this, this);
+        adapter = new HomeAdapter(dbAsteroidHelper.getAllAsteroids(userId),HomeActivity.this, this);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();

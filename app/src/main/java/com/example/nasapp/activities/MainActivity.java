@@ -1,4 +1,4 @@
-package com.example.nasapp;
+package com.example.nasapp.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.nasapp.R;
 import com.example.nasapp.database.DBUsersHelper;
 
 public class MainActivity extends AppCompatActivity {
@@ -19,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
     public static final String SHARED_PREFS = "shared_prefs";
     public static final String EMAIL_KEY = "email_key";
     public static final String ID_KEY = "id_key";
+    public static final String NAME_KEY = "name_key";
 
     SharedPreferences sharedPreferences;
     String email, password;
@@ -39,8 +41,6 @@ public class MainActivity extends AppCompatActivity {
         password = sharedPreferences.getString("PASSWORD_KEY", null);
 
         String email = emailEditText.getText().toString().trim();
-        String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
-
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -52,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
                     if (dbUsersHelper.checkUser(emailEditText.getText().toString().trim(), passwordEditText.getText().toString().trim())) {
                         SharedPreferences.Editor editor = sharedPreferences.edit();
                         editor.putString(EMAIL_KEY, emailEditText.getText().toString());
+                        editor.putString(NAME_KEY, dbUsersHelper.getFullName(emailEditText.getText().toString()));
                         editor.putInt(ID_KEY, dbUsersHelper.getUserById(emailEditText.getText().toString()));
                         editor.apply();
 

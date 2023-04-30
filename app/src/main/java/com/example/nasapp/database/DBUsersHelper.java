@@ -5,11 +5,10 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 import androidx.annotation.Nullable;
 
-import com.example.nasapp.UserModel;
+import com.example.nasapp.models.UserModel;
 
 public class DBUsersHelper extends SQLiteOpenHelper {
     public static final String USERS_TABLE = "USERS_TABLE";
@@ -25,12 +24,12 @@ public class DBUsersHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         String createTable = "CREATE TABLE " + USERS_TABLE + " (" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + COLUMN_FULL_NAME + " TEXT, " + COLUMN_EMAIL + " TEXT, " + COLUMN_PASSWORD + " TEXT, " + REGISTRATION_DATE + " DATETIME DEFAULT CURRENT_TIMESTAMP)";
-
         db.execSQL(createTable);
-
     }
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        db.execSQL("DROP TABLE " + USERS_TABLE);
+        onCreate(db);
 
     }
     public boolean addUser(UserModel userModel) {
@@ -69,22 +68,58 @@ public class DBUsersHelper extends SQLiteOpenHelper {
         }
         return false;
     }
-
     public int getUserById(String email) {
         String[] columns = { COLUMN_ID };
         SQLiteDatabase db = this.getReadableDatabase();
         String query = COLUMN_EMAIL + " = ?";
         String[] selectionArgs = { email };
-        // Check if password argument is not null
+
         Cursor cursor = db.query(USERS_TABLE, columns, query, selectionArgs, null, null, null);
 
         int id = -1;
         if (cursor.moveToFirst()) {
             id = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_ID));
         }
-        Log.d("DB ERROR", "getUserById: " + email + id );
         cursor.close();
         db.close();
         return id;
     }
+    public String getFullName(String email) {
+        String[] columns = { COLUMN_FULL_NAME };
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = COLUMN_EMAIL + " = ?";
+        String[] selectionArgs = { email };
+
+        Cursor cursor = db.query(USERS_TABLE, columns, query, selectionArgs, null, null, null);
+
+        String fullName = "";
+        if (cursor.moveToFirst()) {
+            fullName = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_FULL_NAME));
+        }
+        cursor.close();
+        db.close();
+        return fullName;
+    }
+    public boolean checkEmail(String email) {
+        String[] columns = {
+                COLUMN_ID
+        };
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = COLUMN_EMAIL + " = ?";
+
+        String[] selectionArgs = {email};
+
+        Cursor cursor = db.query(USERS_TABLE, columns, query, selectionArgs, null, null, null);
+
+        int cursorCount = cursor.getCount();
+
+        cursor.close();
+        db.close();
+        if (cursorCount > 0) {
+            return true;
+        }
+        return false;
+    }
+
 }

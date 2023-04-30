@@ -1,4 +1,4 @@
-package com.example.nasapp;
+package com.example.nasapp.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,7 +8,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import org.w3c.dom.Text;
+import com.example.nasapp.R;
 
 
 public class AsteroidDetailActivity extends AppCompatActivity {

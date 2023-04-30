@@ -1,4 +1,4 @@
-package com.example.nasapp;
+package com.example.nasapp.models;
 
 import java.util.Date;
 
