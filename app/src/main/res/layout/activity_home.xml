@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.HomeActivity">
+    tools:context=".activities.HomeActivity"
+    android:background="@color/backgroundBlue">
 
     <ProgressBar
         android:id="@+id/idProgressBar"
@@ -13,6 +14,15 @@
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:visibility="invisible"
+        />
+
+    <pl.droidsonroids.gif.GifImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/idHomeGif"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:src="@drawable/asteroid"
         />
 
 
@@ -25,7 +35,8 @@
         android:textAlignment="center"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        android:textStyle="bold"/>
 
     <TextView
         android:layout_width="match_parent"

@@ -45,10 +45,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyViewHolder> 
         AsteroidModel asteroidModel = asteroidModels.get(position);
         holder.name.setText(asteroidModel.getName());
         holder.hazardousAsteroid.setText(asteroidModel.isHazardousAsteroid() ? "Yes" : "No");
-//        holder.neoReferenceId.setText(asteroidModel.getName());
-//        holder.nasaJplUrl.setText(asteroidModel.getName());
-//        holder.isSentryObject.setText(asteroidModel.getName());
-//        holder.absoluteMagnitude.setText(asteroidModel.getName());
+
 
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,16 +63,12 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyViewHolder> 
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public CardView cardView;
-        TextView name, referenceId, hazardousAsteroid, neoReferenceId, nasaJplUrl, isSentryObject, absoluteMagnitude;
+        TextView name, hazardousAsteroid;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.asteroidName);
-//            referenceId = itemView.findViewById(R.id.referenceId);
             hazardousAsteroid = itemView.findViewById(R.id.dangerousAsteroid);
-//            neoReferenceId = itemView.findViewById(R.id.neoReferenceId);
-//            nasaJplUrl = itemView.findViewById(R.id.nasaJplUrl);
-//            isSentryObject = itemView.findViewById(R.id.isSentryObject);
-//            absoluteMagnitude = itemView.findViewById(R.id.absoluteMagnitude);
+
 
             cardView = itemView.findViewById(R.id.cardAsteroidEntry);
         }

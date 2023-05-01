@@ -10,6 +10,10 @@ import androidx.annotation.Nullable;
 
 import com.example.nasapp.models.UserModel;
 
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 public class DBUsersHelper extends SQLiteOpenHelper {
     public static final String USERS_TABLE = "USERS_TABLE";
     public static final String COLUMN_FIRST_NAME = "FIRST_NAME";
@@ -33,13 +37,13 @@ public class DBUsersHelper extends SQLiteOpenHelper {
         onCreate(db);
 
     }
-    public boolean addUser(UserModel userModel) {
+    public boolean addUser(UserModel userModel) throws NoSuchAlgorithmException {
         SQLiteDatabase db = this.getReadableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(COLUMN_FIRST_NAME, userModel.getName());
         cv.put(COLUMN_LAST_NAME, userModel.getLastName());
         cv.put(COLUMN_EMAIL, userModel.getEmail());
-        cv.put(COLUMN_PASSWORD, userModel.getPassword());
+        cv.put(COLUMN_PASSWORD, HashPassword.hashPassword(userModel.getPassword()));
 
         long insert = db.insert(USERS_TABLE, null, cv);
 
@@ -49,7 +53,26 @@ public class DBUsersHelper extends SQLiteOpenHelper {
             return true;
         }
     }
-    public boolean checkUser(String email, String password) {
+
+    public class HashPassword {
+
+        public static String hashPassword(String password) throws NoSuchAlgorithmException {
+            MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
+            byte[] hashPassword = messageDigest.digest(password.getBytes(StandardCharsets.UTF_8));
+            return bytesToHex(hashPassword);
+
+        }
+
+        public static String bytesToHex(byte[] bytes) {
+            StringBuilder stringBuilder = new StringBuilder();
+            for (byte b : bytes) {
+                stringBuilder.append(String.format("%02x", b));
+            }
+            return stringBuilder.toString();
+        }
+
+    }
+    public boolean checkUser(String email, String password) throws NoSuchAlgorithmException {
         String[] columns = {
           COLUMN_ID
         };
@@ -57,7 +80,9 @@ public class DBUsersHelper extends SQLiteOpenHelper {
 
         String query = COLUMN_EMAIL + " = ?" + " AND " + COLUMN_PASSWORD + " = ? ";
 
-        String[] selectionArgs = {email, password};
+        String hashedPassword = HashPassword.hashPassword(password);
+
+        String[] selectionArgs = {email, hashedPassword};
 
         Cursor cursor = db.query(USERS_TABLE, columns, query, selectionArgs, null, null, null);
 

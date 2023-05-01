@@ -10,7 +10,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.nasapp.R;
 
-import org.w3c.dom.Text;
 
 
 public class AsteroidDetailActivity extends AppCompatActivity {
@@ -34,7 +33,7 @@ public class AsteroidDetailActivity extends AppCompatActivity {
         String hazardousAsteroid = intent.getStringExtra("hazardousAsteroid");
         String isSentryObject = intent.getStringExtra("isSentryObject");
         String absoluteMagnitude = intent.getStringExtra("absoluteMagnitude");
-        String neo_reference_id = intent.getStringExtra("neo_reference_id");
+        String neo_reference_id = intent.getStringExtra("neoReferenceId");
         TextView nameAsteroidView = findViewById(R.id.asteroidNameDetail);
         TextView nasaJplUrlView = findViewById(R.id.asteroidNasaJplUrlDetail);
         TextView hazardousAsteroidView = findViewById(R.id.asteroidDangerousDetail);

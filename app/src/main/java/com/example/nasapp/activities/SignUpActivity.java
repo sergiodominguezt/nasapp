@@ -16,6 +16,8 @@ import com.example.nasapp.R;
 import com.example.nasapp.database.DBUsersHelper;
 import com.example.nasapp.models.UserModel;
 
+import java.security.NoSuchAlgorithmException;
+
 public class SignUpActivity extends AppCompatActivity {
     private Toolbar toolbar;
     @Override
@@ -90,7 +92,11 @@ public class SignUpActivity extends AppCompatActivity {
                 userModel = new UserModel(-1,"error","error","error", "error");
             }
             if (isValidInput == true) {
-                dbUsersHelper.addUser(userModel);
+                try {
+                    dbUsersHelper.addUser(userModel);
+                } catch (NoSuchAlgorithmException e) {
+                    throw new RuntimeException(e);
+                }
                 Toast.makeText(SignUpActivity.this, "User created successfully", Toast.LENGTH_SHORT).show();
                 finish();
             }

@@ -41,6 +41,8 @@ import org.json.JSONObject;
 
 import java.util.Iterator;
 
+import pl.droidsonroids.gif.GifImageView;
+
 
 public class HomeActivity extends AppCompatActivity implements SelectListener {
     RequestQueue requestQueue;
@@ -57,6 +59,7 @@ public class HomeActivity extends AppCompatActivity implements SelectListener {
     HomeAdapter adapter;
     int userId;
     ProgressBar progressBar;
+    GifImageView viewGif;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,7 +86,9 @@ public class HomeActivity extends AppCompatActivity implements SelectListener {
 
         Button logoutBtn = findViewById(R.id.idBtnLogout);
         progressBar = findViewById(R.id.idProgressBar);
+        viewGif = findViewById(R.id.idHomeGif);
 
+        viewGif.setVisibility(View.VISIBLE);
         displayData();
         logoutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -100,6 +105,7 @@ public class HomeActivity extends AppCompatActivity implements SelectListener {
             @Override
             public void onClick(View v) {
                 progressBar.setVisibility(View.VISIBLE);
+                viewGif.setVisibility(View.INVISIBLE);
                 volleyGet();
             }
         });
@@ -124,6 +130,7 @@ public class HomeActivity extends AppCompatActivity implements SelectListener {
                             String nasaJplUrl = asteroid.getString("nasa_jpl_url");
                             boolean isSentryObject = asteroid.getBoolean("is_sentry_object");
                             String absoluteMagnitude = asteroid.getString("absolute_magnitude_h");
+
 
                             DBAsteroidHelper dbAsteroidHelper = new DBAsteroidHelper(HomeActivity.this, userId);
                             dbAsteroidHelper.insertAsteroids(name, hazardous, neoReferenceId, nasaJplUrl, isSentryObject, absoluteMagnitude, userId);
@@ -160,7 +167,9 @@ public class HomeActivity extends AppCompatActivity implements SelectListener {
         recyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
 
+
         progressBar.setVisibility(View.GONE);
+
     }
     @Override
     public void onItemClicked(AsteroidModel asteroidModel) {
@@ -175,15 +184,13 @@ public class HomeActivity extends AppCompatActivity implements SelectListener {
         startActivity(intent);
     }
 
-    private ActivityResultLauncher<Intent> asteroidDetailsLauncher;
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                onBackPressed();
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
+//    @Override
+//    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+//        switch (item.getItemId()) {
+//            case android.R.id.home:
+//                onBackPressed();
+//                return true;
+//        }
+//        return super.onOptionsItemSelected(item);
+//    }
 }

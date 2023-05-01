@@ -60,6 +60,7 @@ public class DBAsteroidHelper extends SQLiteOpenHelper {
             nasaJplUrl = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_NASA_JPL_URL));
             isSentryObject = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_IS_SENTRY_OBJECT)) != 0;
             absoluteMagnitude = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ABSOLUTE_MAGNITUDE));
+            neoReferenceId = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_NEO_REFERENCE_ID));
             if (!name.equals(name) || hazardousAsteroid != hazardousAsteroid || !nasaJplUrl.equals(nasaJplUrl) || isSentryObject != isSentryObject || !absoluteMagnitude.equals(absoluteMagnitude)) {
                 String selection = COLUMN_NEO_REFERENCE_ID + " = ? AND " + COLUMN_USER_ID + " = ?";
                 String[] selectionArgs = {neoReferenceId, String.valueOf(userId)};

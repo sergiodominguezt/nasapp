@@ -4,7 +4,8 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".activities.AsteroidDetailActivity">
+    tools:context=".activities.AsteroidDetailActivity"
+    android:background="@color/backgroundBlue">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/idToolbarDetailed"
@@ -27,7 +28,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Asteroid name"
-            android:layout_margin="16dp" />
+            android:layout_margin="16dp"
+            android:textStyle="bold"/>
         <TextView
             android:id="@+id/asteroidNameDetail"
             android:layout_width="match_parent"
@@ -41,7 +43,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Nasa Jpl Url"
-            android:layout_margin="16dp" />
+            android:layout_margin="16dp"
+            android:textStyle="bold"/>
         <TextView
             android:id="@+id/asteroidNasaJplUrlDetail"
             android:layout_width="match_parent"
@@ -53,7 +56,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Is a dangerous asteroid?"
-            android:layout_margin="16dp" />
+            android:layout_margin="16dp"
+            android:textStyle="bold"/>
         <TextView
             android:id="@+id/asteroidDangerousDetail"
             android:layout_width="match_parent"
@@ -66,7 +70,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Neo Reference Id"
-            android:layout_margin="16dp" />
+            android:layout_margin="16dp"
+            android:textStyle="bold"/>
         <TextView
             android:id="@+id/asteroidNeoIdDetail"
             android:layout_width="match_parent"
@@ -79,7 +84,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Is Sentry Object?"
-            android:layout_margin="16dp" />
+            android:layout_margin="16dp"
+            android:textStyle="bold"/>
         <TextView
             android:id="@+id/asteroidIsSentryDetail"
             android:layout_width="match_parent"
@@ -92,7 +98,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Absolute Magnitude"
-            android:layout_margin="16dp" />
+            android:layout_margin="16dp"
+            android:textStyle="bold"/>
         <TextView
             android:id="@+id/asteroidAbsoluteDetail"
             android:layout_width="match_parent"
