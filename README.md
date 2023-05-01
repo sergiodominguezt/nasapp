@@ -38,7 +38,7 @@ La aplicación Android permite:
 ## Screenshots / Capturas de pantalla
 
 <img src="./images/main.png" align="left"
-width="290" hspace="10" vspace="10">
+width="270" hspace="10" vspace="10">
 
 <img src="./images/createaccount.png" align="center"
 width="265" hspace="10" vspace="10">
