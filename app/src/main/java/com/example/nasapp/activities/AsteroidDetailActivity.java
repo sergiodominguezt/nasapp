@@ -10,6 +10,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.nasapp.R;
 
+import org.w3c.dom.Text;
+
 
 public class AsteroidDetailActivity extends AppCompatActivity {
     private Toolbar toolbarDetailed;
@@ -25,9 +27,6 @@ public class AsteroidDetailActivity extends AppCompatActivity {
         displayDetailedAsteroid();
 
     }
-
-
-
     private void displayDetailedAsteroid() {
         Intent intent = getIntent();
         String name = intent.getStringExtra("name");
@@ -35,22 +34,20 @@ public class AsteroidDetailActivity extends AppCompatActivity {
         String hazardousAsteroid = intent.getStringExtra("hazardousAsteroid");
         String isSentryObject = intent.getStringExtra("isSentryObject");
         String absoluteMagnitude = intent.getStringExtra("absoluteMagnitude");
+        String neo_reference_id = intent.getStringExtra("neo_reference_id");
         TextView nameAsteroidView = findViewById(R.id.asteroidNameDetail);
         TextView nasaJplUrlView = findViewById(R.id.asteroidNasaJplUrlDetail);
         TextView hazardousAsteroidView = findViewById(R.id.asteroidDangerousDetail);
         TextView isSentryObjectView = findViewById(R.id.asteroidIsSentryDetail);
         TextView absoluteMagnitudeView = findViewById(R.id.asteroidAbsoluteDetail);
+        TextView neoReferenceIdView = findViewById(R.id.asteroidNeoIdDetail);
         nameAsteroidView.setText(name);
         nasaJplUrlView.setText(nasaJplUrl);
+        neoReferenceIdView.setText(neo_reference_id);
         hazardousAsteroidView.setText(hazardousAsteroid);
         isSentryObjectView.setText(isSentryObject);
         absoluteMagnitudeView.setText(absoluteMagnitude);
 
     }
 
-    @Override
-    public void onBackPressed() {
-        setResult(RESULT_OK);
-        finish();
-    }
 }

@@ -12,7 +12,8 @@ import com.example.nasapp.models.UserModel;
 
 public class DBUsersHelper extends SQLiteOpenHelper {
     public static final String USERS_TABLE = "USERS_TABLE";
-    public static final String COLUMN_FULL_NAME = "FULL_NAME";
+    public static final String COLUMN_FIRST_NAME = "FIRST_NAME";
+    public static final String COLUMN_LAST_NAME = "LAST_NAME";
     public static final String COLUMN_EMAIL = "EMAIL";
     public static final String COLUMN_PASSWORD = "PASSWORD";
     public static final String COLUMN_ID = "ID";
@@ -23,7 +24,7 @@ public class DBUsersHelper extends SQLiteOpenHelper {
     }
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String createTable = "CREATE TABLE " + USERS_TABLE + " (" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + COLUMN_FULL_NAME + " TEXT, " + COLUMN_EMAIL + " TEXT, " + COLUMN_PASSWORD + " TEXT, " + REGISTRATION_DATE + " DATETIME DEFAULT CURRENT_TIMESTAMP)";
+        String createTable = "CREATE TABLE " + USERS_TABLE + " (" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + COLUMN_FIRST_NAME + " TEXT, "  + COLUMN_LAST_NAME + " TEXT, " + COLUMN_EMAIL + " TEXT, " + COLUMN_PASSWORD + " TEXT, " + REGISTRATION_DATE + " DATETIME DEFAULT CURRENT_TIMESTAMP)";
         db.execSQL(createTable);
     }
     @Override
@@ -35,7 +36,8 @@ public class DBUsersHelper extends SQLiteOpenHelper {
     public boolean addUser(UserModel userModel) {
         SQLiteDatabase db = this.getReadableDatabase();
         ContentValues cv = new ContentValues();
-        cv.put(COLUMN_FULL_NAME, userModel.getName());
+        cv.put(COLUMN_FIRST_NAME, userModel.getName());
+        cv.put(COLUMN_LAST_NAME, userModel.getLastName());
         cv.put(COLUMN_EMAIL, userModel.getEmail());
         cv.put(COLUMN_PASSWORD, userModel.getPassword());
 
@@ -84,8 +86,8 @@ public class DBUsersHelper extends SQLiteOpenHelper {
         db.close();
         return id;
     }
-    public String getFullName(String email) {
-        String[] columns = { COLUMN_FULL_NAME };
+    public String getFirstName(String email) {
+        String[] columns = {COLUMN_FIRST_NAME};
         SQLiteDatabase db = this.getReadableDatabase();
         String query = COLUMN_EMAIL + " = ?";
         String[] selectionArgs = { email };
@@ -94,12 +96,30 @@ public class DBUsersHelper extends SQLiteOpenHelper {
 
         String fullName = "";
         if (cursor.moveToFirst()) {
-            fullName = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_FULL_NAME));
+            fullName = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_FIRST_NAME));
         }
         cursor.close();
         db.close();
         return fullName;
     }
+
+    public String getLastName(String email) {
+        String[] columns = {COLUMN_LAST_NAME};
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = COLUMN_EMAIL + " = ?";
+        String[] selectionArgs = { email };
+
+        Cursor cursor = db.query(USERS_TABLE, columns, query, selectionArgs, null, null, null);
+
+        String lastName = "";
+        if (cursor.moveToFirst()) {
+            lastName = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_LAST_NAME));
+        }
+        cursor.close();
+        db.close();
+        return lastName;
+    }
+
     public boolean checkEmail(String email) {
         String[] columns = {
                 COLUMN_ID

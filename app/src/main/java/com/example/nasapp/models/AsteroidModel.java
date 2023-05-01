@@ -9,6 +9,7 @@ public class AsteroidModel {
     private boolean isSentryObject;
     private String absoluteMagnitude;
     private long userId;
+    private String closeApproachDate;
 
     public AsteroidModel(long id, String name, boolean hazardousAsteroid, String neoReferenceId, String nasaJplUrl, boolean isSentryObject, String absoluteMagnitude, long userId) {
         this.id = id;
@@ -19,6 +20,7 @@ public class AsteroidModel {
         this.isSentryObject = isSentryObject;
         this.absoluteMagnitude = absoluteMagnitude;
         this.userId = userId;
+
     }
 
     public AsteroidModel() {

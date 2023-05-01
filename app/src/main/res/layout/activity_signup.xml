@@ -35,10 +35,10 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/idSignUp"
         android:layout_marginStart="40dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="160dp"
         android:padding="5dp"
-        android:text="Full name"
+        android:text="First name"
         android:textAppearance="@style/TextAppearance.AppCompat.Small" />
 
     <EditText
@@ -49,7 +49,6 @@
         android:layout_alignParentStart="true"
         android:layout_marginStart="40dp"
         android:layout_marginEnd="40dp"
-        android:layout_marginTop="10dp"
         android:hint="@string/enter_name"
         android:importantForAutofill="no"
         android:inputType="textPersonName"
@@ -58,8 +57,32 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/idEmailSignUp"
+        android:id="@+id/idLastName"
         android:layout_below="@id/idEdtFullName"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="160dp"
+        android:padding="5dp"
+        android:text="Last name"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:id="@+id/idEdtLastName"
+        android:layout_below="@id/idLastName"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="40dp"
+        android:hint="@string/enter_last_name"
+        android:importantForAutofill="no"
+        android:inputType="textPersonName"
+        android:padding="5dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/idEmailSignUp"
+        android:layout_below="@id/idEdtLastName"
         android:layout_marginStart="40dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="160dp"
@@ -75,7 +98,6 @@
         android:layout_alignParentStart="true"
         android:layout_marginStart="40dp"
         android:layout_marginEnd="40dp"
-        android:layout_marginTop="10dp"
         android:hint="@string/enter_email"
         android:importantForAutofill="no"
         android:inputType="textEmailAddress"
@@ -101,7 +123,6 @@
         android:layout_alignParentStart="true"
         android:layout_marginStart="40dp"
         android:layout_marginEnd="40dp"
-        android:layout_marginTop="10dp"
         android:hint="@string/enter_password"
         android:importantForAutofill="no"
         android:inputType="textPassword"

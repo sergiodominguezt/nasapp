@@ -6,13 +6,17 @@ public class UserModel {
 
     private int id;
     private String name;
+    private String lastName;
     private String email;
     private String password;
     private Date createdDate;
 
-    public UserModel(int id, String name, String email, String password) {
+
+
+    public UserModel(int id, String name, String lastName, String email, String password) {
         this.id = id;
         this.name = name;
+        this.lastName= lastName;
         this.email = email;
         this.password = password;
         this.createdDate = new Date();
@@ -28,6 +32,14 @@ public class UserModel {
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 '}';
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public int getId() {

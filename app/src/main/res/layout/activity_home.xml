@@ -59,7 +59,7 @@
         android:id="@+id/idDownloadData"
         android:layout_marginStart="80dp"
         android:layout_marginEnd="80dp"
-        android:layout_marginTop="600dp"
+        android:layout_marginTop="620dp"
         android:text="@string/download_data" />
 
 </RelativeLayout>

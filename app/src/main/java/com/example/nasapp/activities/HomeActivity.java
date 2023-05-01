@@ -13,7 +13,6 @@ import android.widget.TextView;
 
 
 import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -48,9 +47,11 @@ public class HomeActivity extends AppCompatActivity implements SelectListener {
     public static final String SHARED_PREFS = "shared_prefs";
     public static final String EMAIL_KEY = "email_key";
     public static final String ID_KEY = "id_key";
-    public static final String NAME_KEY = "name_key";
+    public static final String FIRST_NAME_KEY = "first_name_key";
+    public static final String LAST_NAME_KEY = "last_name_key";
+
     SharedPreferences sharedPreferences;
-    String email, name;
+    String email, fistName, lastName;
     String url;
     RecyclerView recyclerView;
     HomeAdapter adapter;
@@ -70,25 +71,19 @@ public class HomeActivity extends AppCompatActivity implements SelectListener {
 
         sharedPreferences = getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
         email = sharedPreferences.getString(EMAIL_KEY, null);
-        name = sharedPreferences.getString(NAME_KEY, null);
+        fistName = sharedPreferences.getString(FIRST_NAME_KEY, null);
+        lastName = sharedPreferences.getString(LAST_NAME_KEY, null);
 
         TextView welcome = findViewById(R.id.idWelcome);
         url = "https://api.nasa.gov/neo/rest/v1/feed?start_date=2023-04-26&end_date=2023-04-30&api_key=R8LmGPZJGAirleebrNnMmuH3XtidhC7XmiE0oKtu";
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        welcome.setText("Welcome \n" + name);
+        welcome.setText("Welcome \n" + fistName + " " + lastName);
 
         Button logoutBtn = findViewById(R.id.idBtnLogout);
         progressBar = findViewById(R.id.idProgressBar);
 
-        asteroidDetailsLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
-                result -> {
-                    if (result.getResultCode() == RESULT_OK) {
-                        adapter.notifyDataSetChanged();
-                    }
-
-                });
         displayData();
         logoutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -129,8 +124,6 @@ public class HomeActivity extends AppCompatActivity implements SelectListener {
                             String nasaJplUrl = asteroid.getString("nasa_jpl_url");
                             boolean isSentryObject = asteroid.getBoolean("is_sentry_object");
                             String absoluteMagnitude = asteroid.getString("absolute_magnitude_h");
-
-
 
                             DBAsteroidHelper dbAsteroidHelper = new DBAsteroidHelper(HomeActivity.this, userId);
                             dbAsteroidHelper.insertAsteroids(name, hazardous, neoReferenceId, nasaJplUrl, isSentryObject, absoluteMagnitude, userId);
@@ -178,6 +171,7 @@ public class HomeActivity extends AppCompatActivity implements SelectListener {
         intent.putExtra("hazardousAsteroid", asteroidModel.isHazardousAsteroid() ? "Yes" : "No");
         intent.putExtra("isSentryObject", asteroidModel.isSentryObject() ? "Yes" : "No");
         intent.putExtra("absoluteMagnitude", asteroidModel.getAbsoluteMagnitude());
+        intent.putExtra("neoReferenceId", asteroidModel.getNeoReferenceId());
         startActivity(intent);
     }
 

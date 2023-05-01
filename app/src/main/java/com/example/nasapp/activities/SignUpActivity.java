@@ -26,6 +26,8 @@ public class SignUpActivity extends AppCompatActivity {
         EditText fullNameEditText = findViewById(R.id.idEdtFullName);
         EditText emailEditText = findViewById(R.id.idEdtEmailSignUp);
         EditText passwordEditText = findViewById(R.id.idEdtPasswordSignUp);
+        EditText lastNameEditText = findViewById(R.id.idEdtLastName);
+
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -37,6 +39,7 @@ public class SignUpActivity extends AppCompatActivity {
         signUpBtn.setOnClickListener(v -> {
             boolean isValidInput = true;
             String fullName = fullNameEditText.getText().toString();
+            String lastName = lastNameEditText.getText().toString();
             String email = emailEditText.getText().toString();
             String password = passwordEditText.getText().toString();
 
@@ -53,6 +56,15 @@ public class SignUpActivity extends AppCompatActivity {
 
             if (fullName.length() < 3) {
                 fullNameEditText.setError("Name must be at least 3 characters");
+                isValidInput = false;
+            }
+            if (!lastName.matches("[a-zA-Z]+")) {
+                fullNameEditText.setError("Invalid last name");
+                isValidInput = false;
+            }
+
+            if (lastName.length() < 3) {
+                fullNameEditText.setError("Last name must be at least 3 characters");
                 isValidInput = false;
             }
 
@@ -72,14 +84,15 @@ public class SignUpActivity extends AppCompatActivity {
             }
             UserModel userModel;
             try {
-                userModel = new UserModel(-1, fullName,email,password);
+                userModel = new UserModel(-1, fullName, lastName,email,password);
             } catch (Exception e) {
-                Toast.makeText(SignUpActivity.this, "Error creating customer", Toast.LENGTH_SHORT).show();
-                userModel = new UserModel(-1,"error","error", "error");
+                Toast.makeText(SignUpActivity.this, "Error creating user", Toast.LENGTH_SHORT).show();
+                userModel = new UserModel(-1,"error","error","error", "error");
             }
             if (isValidInput == true) {
-                boolean success = dbUsersHelper.addUser(userModel);
-                Toast.makeText(SignUpActivity.this, "User created" + success, Toast.LENGTH_SHORT).show();
+                dbUsersHelper.addUser(userModel);
+                Toast.makeText(SignUpActivity.this, "User created successfully", Toast.LENGTH_SHORT).show();
+                finish();
             }
         });
     }

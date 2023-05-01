@@ -20,7 +20,8 @@ public class MainActivity extends AppCompatActivity {
     public static final String SHARED_PREFS = "shared_prefs";
     public static final String EMAIL_KEY = "email_key";
     public static final String ID_KEY = "id_key";
-    public static final String NAME_KEY = "name_key";
+    public static final String FIRST_NAME_KEY = "first_name_key";
+    public static final String LAST_NAME_KEY = "last_name_key";
 
     SharedPreferences sharedPreferences;
     String email, password;
@@ -38,7 +39,6 @@ public class MainActivity extends AppCompatActivity {
 
         sharedPreferences = getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
         email = sharedPreferences.getString("EMAIL_KEY", null);
-        password = sharedPreferences.getString("PASSWORD_KEY", null);
 
         String email = emailEditText.getText().toString().trim();
 
@@ -52,7 +52,8 @@ public class MainActivity extends AppCompatActivity {
                     if (dbUsersHelper.checkUser(emailEditText.getText().toString().trim(), passwordEditText.getText().toString().trim())) {
                         SharedPreferences.Editor editor = sharedPreferences.edit();
                         editor.putString(EMAIL_KEY, emailEditText.getText().toString());
-                        editor.putString(NAME_KEY, dbUsersHelper.getFullName(emailEditText.getText().toString()));
+                        editor.putString(FIRST_NAME_KEY, dbUsersHelper.getFirstName(emailEditText.getText().toString()));
+                        editor.putString(LAST_NAME_KEY, dbUsersHelper.getLastName(emailEditText.getText().toString()));
                         editor.putInt(ID_KEY, dbUsersHelper.getUserById(emailEditText.getText().toString()));
                         editor.apply();
 

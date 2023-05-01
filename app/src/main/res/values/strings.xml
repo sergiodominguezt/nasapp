@@ -5,7 +5,8 @@
     <string name="enter_email">Enter your Email</string>
     <string name="logout">Logout</string>
     <string name="title_activity_home">HomeActivity</string>
-    <string name="enter_name">Enter your name</string>
+    <string name="enter_first_name">Enter your first name</string>
+    <string name="enter_last_name">Enter your last name</string>
     <string name="signup">Sign Up!</string>
     <string name="register">No account yet? Sign up</string>
     <string name="title_activity_signup">SignUpActivity</string>
